@@ -22,27 +22,27 @@ func main() {
 	fmt.Println("Commands: add, list, complete, delete, exit")
 
 	for {
-		fmt.Print("\nВведите команду: ")
+		fmt.Print("\nEnter the command: ")
 		scanner.Scan()
 		input := strings.TrimSpace(scanner.Text())
 
 		switch input {
 		case "add":
-			fmt.Println("Введите задачу: ")
+			fmt.Println("Enter a task: ")
 			scanner.Scan()
 			title := strings.TrimSpace(scanner.Text())
 			if title != "" {
 				tasks = append(tasks, Task{ID: nextID, Title: title})
-				fmt.Printf("Задача добавлена с ID %d\n", nextID)
+				fmt.Printf("Task added with ID %d\n", nextID)
 				nextID++
 			} else {
-				fmt.Println("Ошибка: задача не может быть пустой")
+				fmt.Println("Error: task cannot be empty")
 			}
 		case "list":
 			if len(tasks) == 0 {
-				fmt.Println("Список задач пуст")
+				fmt.Println("The task list is empty")
 			} else {
-				fmt.Println("Список задач:")
+				fmt.Println("List of tasks:")
 				for _, task := range tasks {
 					status := " "
 					if task.Completed {
@@ -52,11 +52,11 @@ func main() {
 				}
 			}
 		case "complete":
-			fmt.Print("Введите ID задачи для завершения: ")
+			fmt.Print("Enter the task ID to complete: ")
 			scanner.Scan()
 			id, err := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 			if err != nil {
-				fmt.Println("Ошибка: введите числовой ID")
+				fmt.Println("Error: Please enter a numeric ID")
 				continue
 			}
 
@@ -64,22 +64,22 @@ func main() {
 			for i := range tasks {
 				if tasks[i].ID == id {
 					tasks[i].Completed = true
-					fmt.Printf("Задача %d завершена\n", id)
+					fmt.Printf("Task %d completed\n", id)
 					found = true
 					break
 				}
 			}
 
 			if !found {
-				fmt.Printf("Задача с ID %d не найдена\n", id)
+				fmt.Printf("Task with ID %d not found\n", id)
 			}
 
 		case "delete":
-			fmt.Print("Введите ID задачи для удаления: ")
+			fmt.Print("Enter the task ID to delete: ")
 			scanner.Scan()
 			id, err := strconv.Atoi(strings.TrimSpace(scanner.Text()))
 			if err != nil {
-				fmt.Println("Ошибка: введите числовой ID")
+				fmt.Println("Error: Please enter a numeric ID")
 				continue
 			}
 
@@ -87,23 +87,23 @@ func main() {
 			for i, task := range tasks {
 				if task.ID == id {
 					tasks = append(tasks[:i], tasks[i+1:]...)
-					fmt.Printf("Задача %d удалена\n", id)
+					fmt.Printf("Task %d removed\n", id)
 					found = true
 					break
 				}
 			}
 
 			if !found {
-				fmt.Printf("Задача с ID %d не найдена\n", id)
+				fmt.Printf("Task with ID %d not found\n", id)
 			}
 
 		case "exit":
-			fmt.Println("Выход из программы")
+			fmt.Println("Exit the program")
 			return
 
 		case "":
 		default:
-			fmt.Println("Неизвестная команда. Доступные команды: add, list, complete, delete, exit")
+			fmt.Println("Unknown command. Available commands: add, list, complete, delete, exit")
 		}
 	}
 }
